@@ -4,7 +4,6 @@ import org.influxdb.InfluxDB;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +20,9 @@ public class WriteMultiplePointsToInfluxDB {
   public static void main(final String[] args) throws Exception {
 
     String measurements = "liftanddrivetime";
+
+    List<String> values = Arrays.asList("1", "2", "3");
+    String myTagKey = "identifier";
 
     List<String> keysTags = Arrays.asList("identifier", "identifier", "identifier");
     List<String> valuesTags = Arrays.asList("1", "2", "3");
@@ -125,12 +127,20 @@ public class WriteMultiplePointsToInfluxDB {
     }
     System.out.println("InfluxDB: " + dbName + " created");
     influxDB.close();
+
   }
 }
 
 
+/*this.influxDB.write(dbName, "default", InfluxDB.ConsistencyLevel.ONE, Arrays.asList(
+        "cpu,atag=test1 idle=100,usertime=10,system=1",
+        "cpu,atag=test2 idle=200,usertime=20,system=2",
+        "cpu,atag=test3 idle=300,usertime=30,system=3"
+        ));
+*/
 
 
-
+//TODO
+//https://docs.influxdata.com/influxdb/v0.9/guides/writing_data/
 
 

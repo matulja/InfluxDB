@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by mfehler on 13.06.17.
  */
-public class ReadDataFromPostgreSQL {
+public class ReadDataFromPostgreSQLTest {
 
    static Map<String, Integer> myMap = new HashMap<String, Integer>();
 
