@@ -10,6 +10,7 @@ import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 
 import java.math.BigDecimal;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,11 +21,12 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
 /**
  * Created by mfehler on 21.06.17.
  */
-public class _ReadDataFromPostgres {
+public class _ReadDataFromPostgresAndWriteToInfluxDB {
 
   public static final String SOURCE = "source";
   public static final String dbName = "stillDB";
-  public static final Integer points = 1000;
+  public static final Integer points = 12;
+  public static Integer columnSize = null;
 
 
 
@@ -47,11 +49,11 @@ public class _ReadDataFromPostgres {
     final DatabaseMetaData databaseMetaData = connectorRepository.getDatabaseMetaData(SOURCE);
 
 
-
     // get Field Set 1
 
     ColumnMetaData columnMetaData = databaseMetaData.getTableMetaData("tdm_liftanddrivetimes").getColumnMetaData("readoutduration");
-    int columnSize = columnMetaData.getTableMetaData().getRowCount();
+    columnSize = columnMetaData.getTableMetaData().getTotalRowCount();
+    System.out.println("ColumnSize: " + columnSize);
     final List<Map<String, Object>> tableData = readTableDataTool.readTableData(SOURCE, databaseMetaData.getTableMetaData("tdm_liftanddrivetimes"), columnSize);
 
     for (int i = 0; i < columnSize; i++) {
@@ -106,6 +108,9 @@ public class _ReadDataFromPostgres {
 
     // get time
 
+
+
+
     columnMetaData = databaseMetaData.getTableMetaData("tdm_liftanddrivetimes").getColumnMetaData("readouttime");
 
     final List<Map<String, Object>> tableData4 = readTableDataTool.readTableData(SOURCE, databaseMetaData.getTableMetaData("tdm_liftanddrivetimes"), columnSize);
@@ -113,12 +118,13 @@ public class _ReadDataFromPostgres {
     for (int i = 0; i < columnSize; i++) {
 
       final Date valueTags = (Date) tableData.get(i).get("readouttime");
-
       resultTime.add(valueTags);
       System.out.println("Column readouttime " + resultTime.toString());
 
 
     }
+
+
 
     /////////////////////////////////////////////////Part 2 ////////////////////////////////////////////////////////////////
 
@@ -127,18 +133,19 @@ public class _ReadDataFromPostgres {
     String measurements = "liftanddrivetime";
     List<Long> timeList = new ArrayList<>();
 
-    int j=0;
+    int j = 0;
 
 
-  /*  for (int i=0; i<resultTime.size(); i++)
+    // convert Date to long format in InfluxDB
+
+    for (int i = 0; i < resultTime.size(); i++)
 
     {
-      // convert Date to long format in InfluxDB
       long millis = resultTime.get(i).getTime();
-     timeList.add(millis);
-     System.out.println("Millis:" + millis);
+      timeList.add(millis);
 
-    }*/
+
+    }
 
     String fieldKey = "";
     BigDecimal fieldValue = null;
@@ -147,11 +154,15 @@ public class _ReadDataFromPostgres {
     String tagValue = "";
     String tagKey = "";
 
+    Date timeValue;
+    String timeName;
+
 
     for (Map.Entry<String, BigDecimal> e : resultFieldSet1.entrySet()) {
 
       fieldKey = e.getKey();
       fieldValue = e.getValue();
+      e.getValue();
       System.out.println("key " + fieldKey + " value " + fieldValue);
     }
 
@@ -162,12 +173,25 @@ public class _ReadDataFromPostgres {
       System.out.println("key " + fieldKey2 + " value " + fieldValue2);
     }
 
+
     for (Map.Entry<String, String> e : resultTags.entrySet()) {
 
       tagKey = e.getKey();
       tagValue = e.getValue();
       System.out.println("key " + tagKey + " value " + tagValue);
     }
+
+
+
+    Iterator<String> keySetIterator = resultTags.keySet().iterator();
+    while(keySetIterator.hasNext())
+    {
+          String key = keySetIterator.next();
+          System.out.println("key: " + key + " value: " + resultTags.get(key));
+
+
+    }
+
 
 
     if (influxDB.databaseExists(dbName)) {
@@ -190,13 +214,11 @@ public class _ReadDataFromPostgres {
 
     for (int t = 1; t < resultTime.size(); t++) {
 
-        long millis = resultTime.get(t).getTime();
-        System.out.println("milies: " + millis);
+        while (j < points && t<resultTime.size()) {
 
-      while (j < points) {
-
+        System.out.println("Time in point: " + resultTime.get(t).getTime());
         point = Point.measurement(measurements)
-                .time(millis, TimeUnit.MILLISECONDS)
+                .time(resultTime.get(t).getTime(), TimeUnit.MILLISECONDS)
                 .addField(fieldKey, fieldValue)
                 .addField(fieldKey2, fieldValue2)
                 .tag(tagKey, tagValue)
@@ -205,17 +227,21 @@ public class _ReadDataFromPostgres {
         batchPoints.point(point);
         influxDB.write(batchPoints);
         j++;
-
+        t++;
       }
-    }
-       System.out.println("Erste Point " + point.toString());
 
-      System.out.println("InfluxDB: " + dbName + " created");
-      influxDB.close();
+    }
+
+    System.out.println("Erste Point " + point.toString());
+
+    System.out.println("InfluxDB: " + dbName + " created");
+    influxDB.close();
 
   }
 
 }
+
+
 
 
 

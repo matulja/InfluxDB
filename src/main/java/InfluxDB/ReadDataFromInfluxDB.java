@@ -12,7 +12,7 @@ import static java.util.stream.StreamSupport.stream;
  */
 public class ReadDataFromInfluxDB {
 
-  static String dbName = "still_test";
+  static String dbName = "stillDB";
   static String dbName2 = "NOAA_water_database";
   static String dbName3= "still";
 

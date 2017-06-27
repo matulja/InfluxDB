@@ -22,11 +22,7 @@ public ConnetionsInfoPostgreSQL() {
         public static Connection getConnection() throws ClassNotFoundException, SQLException {
 
                 Connection con = null;
-
-                // load the Driver Class
                 Class.forName("org.postgresql.Driver");
-
-                // create the connection now
                 con = DriverManager.getConnection("jdbc:postgresql://localhost/still", "user", "pass");
 
                 System.out.println("DB Connection created successfully");

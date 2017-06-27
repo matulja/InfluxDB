@@ -76,7 +76,7 @@ public class WriteMultiplePointsToInfluxDB {
         fieldKey = "liftanddrivetime";
         j++;
 
-        {
+
 
 
           for (int k = 0; k < valuesFields2.size(); k++) {
@@ -91,6 +91,7 @@ public class WriteMultiplePointsToInfluxDB {
 
 
               influxDB.createDatabase(dbName);
+              System.out.println("Datenbank" + dbName);
               BatchPoints batchPoints = BatchPoints
                       .database(dbName)
                       .retentionPolicy("autogen")
@@ -111,8 +112,8 @@ public class WriteMultiplePointsToInfluxDB {
 
                 batchPoints.point(point);
                 influxDB.write(batchPoints);
+                System.out.println("Point " + point.toString());
                 j++;
-
 
               }
 
@@ -124,7 +125,7 @@ public class WriteMultiplePointsToInfluxDB {
 
       }
 
-    }
+
     System.out.println("InfluxDB: " + dbName + " created");
     influxDB.close();
 
