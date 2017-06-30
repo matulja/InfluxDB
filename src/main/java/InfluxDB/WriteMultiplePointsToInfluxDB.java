@@ -49,13 +49,13 @@ public class WriteMultiplePointsToInfluxDB {
 
     long milies = 360000;
 
-    if (influxDB.databaseExists(dbName)) {
+    /*if (influxDB.databaseExists(dbName)) {
 
       influxDB.deleteDatabase(dbName);
 
     } else {
 
-    }
+    }*/
 
 
     for (int i = 0; i < valuesTags.size(); i++) {
@@ -112,7 +112,7 @@ public class WriteMultiplePointsToInfluxDB {
 
                 batchPoints.point(point);
                 influxDB.write(batchPoints);
-                System.out.println("Point " + point.toString());
+                System.out.println("RowData " + point.toString());
                 j++;
 
               }

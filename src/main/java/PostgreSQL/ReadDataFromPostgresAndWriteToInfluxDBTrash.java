@@ -16,7 +16,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static Connection.ConnectionInfoInfluxDB.influxDB;
-import static PostgreSQL.ReadDataFromPostgreSQL.resultFieldSetPostgre1;
 import static PostgreSQL.ReadDataFromPostgreSQLResultSet.resultTagsPostgre_;
 
 /**
@@ -38,7 +37,7 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
 
   public static void main(final String[] args) throws SQLException {
 
-    final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
+  /*  final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
     connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQL());
 
     final ReadTableDataTool readTableDataTool = new ReadTableDataTool(connectorRepository);
@@ -164,11 +163,11 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
                     .build();
 
 
-            Point point = null;
+            RowData point = null;
 
              while (j < POINT_COUNT) {
 
-              point = Point.measurement(measurements)
+              point = RowData.measurement(measurements)
                       .time(milies, TimeUnit.MILLISECONDS)
                       .addField(fieldKey, fieldValue)
                       .addField(fieldKey2, fieldValue2)
@@ -177,7 +176,7 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
 
               batchPoints.point(point);
               influxDB.write(batchPoints);
-              System.out.println("Point " + point.toString());
+              System.out.println("RowData " + point.toString());
               j++;
 
             }
@@ -191,7 +190,7 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
     }
 
     System.out.println("InfluxDB: " + dbName + " created");
-    influxDB.close();
+    influxDB.close();*/
 
   }
 }

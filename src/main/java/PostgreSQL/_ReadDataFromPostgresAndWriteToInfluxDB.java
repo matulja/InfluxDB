@@ -29,10 +29,8 @@ public class _ReadDataFromPostgresAndWriteToInfluxDB {
   public static Integer columnSize = null;
 
 
-
   public static final List<String> PostgresTable = Arrays.asList("tdm_liftanddrivetimes", "tdm_vehicledataunit", "tdm_vehicle");
   public static final List<String> PostgresColumns = Arrays.asList("liftanddrivetime", "readoutduration", "readouttime");
-
 
   public static final Map<String, BigDecimal> resultFieldSet1 = new HashMap<String, BigDecimal>();
   public static final Map<String, BigDecimal> resultFieldSet2 = new HashMap<String, BigDecimal>();
@@ -42,7 +40,7 @@ public class _ReadDataFromPostgresAndWriteToInfluxDB {
 
   public static void main(final String[] args) throws SQLException {
 
-    final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
+  /*  final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
     connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQL());
 
     final ReadTableDataTool readTableDataTool = new ReadTableDataTool(connectorRepository);
@@ -210,14 +208,14 @@ public class _ReadDataFromPostgresAndWriteToInfluxDB {
             .build();
 
 
-    Point point = null;
+    RowData point = null;
 
     for (int t = 1; t < resultTime.size(); t++) {
 
         while (j < points && t<resultTime.size()) {
 
         System.out.println("Time in point: " + resultTime.get(t).getTime());
-        point = Point.measurement(measurements)
+        point = RowData.measurement(measurements)
                 .time(resultTime.get(t).getTime(), TimeUnit.MILLISECONDS)
                 .addField(fieldKey, fieldValue)
                 .addField(fieldKey2, fieldValue2)
@@ -232,10 +230,10 @@ public class _ReadDataFromPostgresAndWriteToInfluxDB {
 
     }
 
-    System.out.println("Erste Point " + point.toString());
+    System.out.println("Erste RowData " + point.toString());
 
     System.out.println("InfluxDB: " + dbName + " created");
-    influxDB.close();
+    influxDB.close();*/
 
   }
 

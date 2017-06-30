@@ -36,13 +36,13 @@ public class WriteSinglePointsToInfluxDB {
     System.out.println("timestamp: " + timestamp);
 
 
-    if (influxDB.databaseExists(dbName)) {
+  /*  if (influxDB.databaseExists(dbName)) {
 
           influxDB.deleteDatabase(dbName);
 
     } else {
 
-    }
+    }*/
 
       influxDB.createDatabase(dbName);
       influxDB.enableBatch(2000, 1000, TimeUnit.MILLISECONDS);

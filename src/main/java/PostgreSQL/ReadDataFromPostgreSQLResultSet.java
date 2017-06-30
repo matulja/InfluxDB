@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.util.*;
 
-import static PostgreSQL.ReadDataFromPostgreSQL.resultTimePostgre;
 
 
 /**
