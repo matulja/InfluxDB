@@ -1,5 +1,6 @@
 package PostgreSQL;
 
+import Connection.ConnectionPostgreSQLStillDB;
 import de.akquinet.jbosscc.guttenbase.meta.ColumnMetaData;
 import de.akquinet.jbosscc.guttenbase.meta.DatabaseMetaData;
 import de.akquinet.jbosscc.guttenbase.meta.TableMetaData;
@@ -13,7 +14,7 @@ import java.sql.Time;
 /**
  * Created by mfehler on 13.06.17.
  */
-public class TestPostgreSQL {
+public class TestPostgreSQLStill {
 
   public static final String SOURCE = "source";
 
@@ -21,7 +22,7 @@ public class TestPostgreSQL {
 
 
     final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
-    connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQL());
+    connectorRepository.addConnectionInfo(SOURCE, new ConnectionPostgreSQLStillDB());
 
     DatabaseMetaData source = connectorRepository.getDatabaseMetaData(SOURCE);
 

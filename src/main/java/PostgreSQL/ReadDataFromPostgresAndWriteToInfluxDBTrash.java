@@ -163,11 +163,11 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
                     .build();
 
 
-            RowData point = null;
+            DataRecord point = null;
 
              while (j < POINT_COUNT) {
 
-              point = RowData.measurement(measurements)
+              point = DataRecord.measurement(measurements)
                       .time(milies, TimeUnit.MILLISECONDS)
                       .addField(fieldKey, fieldValue)
                       .addField(fieldKey2, fieldValue2)
@@ -176,7 +176,7 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
 
               batchPoints.point(point);
               influxDB.write(batchPoints);
-              System.out.println("RowData " + point.toString());
+              System.out.println("DataRecord " + point.toString());
               j++;
 
             }

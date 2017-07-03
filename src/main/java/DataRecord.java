@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 //Read data by rows from ResultSet
 
-public class RowData {
+public class DataRecord {
 
   public String measurement;
 
@@ -29,9 +29,11 @@ public class RowData {
   private String tagsKey;
   private String tagsValue;
 
+  private int totalRows;
 
-  public RowData(String measurement, Long time, TimeUnit precision, String fieldKey, BigDecimal fieldValue,
-                 String fieldKey2, BigDecimal fieldValue2, String tagsKey, String tagsValue) {
+
+  public DataRecord(String measurement, Long time, TimeUnit precision, String fieldKey, BigDecimal fieldValue,
+                    String fieldKey2, BigDecimal fieldValue2, String tagsKey, String tagsValue) {
     this.measurement = measurement;
     this.time = time;
     this.precision = precision;
@@ -78,29 +80,5 @@ public class RowData {
   public String getTagsValue() {
     return tagsValue;
   }
-
-
-  public List<String> getColumnNames(ResultSet rs) throws SQLException {
-    List<String> names = new ArrayList<String>();
-    ResultSetMetaData metadata = rs.getMetaData();
-
-    for (int i = 0; i < metadata.getColumnCount(); i++) {
-      names.add(metadata.getColumnName(i+1));
-    }
-
-    return names;
-  }
-
-  public int getRowCount(ResultSet rs) throws SQLException {
-
-    int totalRows = 0;
-
-    while (rs.next())
-    {
-      totalRows++;
-    }
-    return totalRows;
-  }
-
 
 }

@@ -19,37 +19,25 @@ public class Main {
     final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
     connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQL());
     final Connector connector = connectorRepository.createConnector(SOURCE);
+
     Connection connection = connector.openConnection();
     Statement statement = connection.createStatement();
 
-    String sql = "SELECT liftanddrivetime, readoutduration, identifier, readouttime FROM tdm_liftanddrivetimes ladt," +
-            "tdm_vehicle v, tdm_vehicledataunit du WHERE ladt.vehicle_id =" +
-            "v.id LIMIT 12";
+    String sql = "SELECT liftanddrivetime, readoutduration, identifier, extract (epoch from readouttime) * 1000 as time" +
+            " FROM tdm_liftanddrivetimes ladt, tdm_vehicle v, tdm_vehicledataunit du " +
+            "WHERE ladt.vehicle_id =v.id";
 
     final ResultSet resultSet = statement.executeQuery(sql);
 
     final ReadDataTool readDataTool = new ReadDataTool(resultSet);
     final WriteDataTool writeDataTool= new WriteDataTool();
 
-    //RowData rowdata;
 
-    /*while((rowdata=readDataTool.readLine(resultSet)) != null)  {
+    DataRecord dataRecord;
+      while((dataRecord=readDataTool.readLine()) != null)  {
+        writeDataTool.writeLine(dataRecord);
+      }
 
-      System.out.println("Write the Data");
-      writeDataTool.writeLine(readDataTool.readLine(resultSet));
-    //  System.out.println("Rows " + rowdata.getRowCount(resultSet));
-      System.out.println("Key Value: " + rowdata.getTagsValue());
-      System.out.println("time Value: " + rowdata.getTime());
-
-    }*/
-
-    int i=0;
-    int countRows=15;
-
-    while (i<countRows) {
-      writeDataTool.writeLine(readDataTool.readLine(resultSet));
-      i++;
-    }
 
   }
 
