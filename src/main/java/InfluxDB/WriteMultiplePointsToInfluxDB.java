@@ -112,7 +112,7 @@ public class WriteMultiplePointsToInfluxDB {
 
                 batchPoints.point(point);
                 influxDB.write(batchPoints);
-                System.out.println("DataRecord " + point.toString());
+                System.out.println("Trash.DataRecord_ " + point.toString());
                 j++;
 
               }

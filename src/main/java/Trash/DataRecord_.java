@@ -1,3 +1,5 @@
+package Trash;
+
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -14,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 //Read data by rows from ResultSet
 
-public class DataRecord {
+public class DataRecord_ {
 
   public String measurement;
 
@@ -32,8 +34,8 @@ public class DataRecord {
   private int totalRows;
 
 
-  public DataRecord(String measurement, Long time, TimeUnit precision, String fieldKey, BigDecimal fieldValue,
-                    String fieldKey2, BigDecimal fieldValue2, String tagsKey, String tagsValue) {
+  public DataRecord_(String measurement, Long time, TimeUnit precision, String fieldKey, BigDecimal fieldValue,
+                     String fieldKey2, BigDecimal fieldValue2, String tagsKey, String tagsValue) {
     this.measurement = measurement;
     this.time = time;
     this.precision = precision;

@@ -208,14 +208,14 @@ public class _ReadDataFromPostgresAndWriteToInfluxDB {
             .build();
 
 
-    DataRecord point = null;
+    Trash.DataRecord_ point = null;
 
     for (int t = 1; t < resultTime.size(); t++) {
 
         while (j < points && t<resultTime.size()) {
 
         System.out.println("Time in point: " + resultTime.get(t).getTime());
-        point = DataRecord.measurement(measurements)
+        point = Trash.DataRecord_.measurement(measurements)
                 .time(resultTime.get(t).getTime(), TimeUnit.MILLISECONDS)
                 .addField(fieldKey, fieldValue)
                 .addField(fieldKey2, fieldValue2)
@@ -230,7 +230,7 @@ public class _ReadDataFromPostgresAndWriteToInfluxDB {
 
     }
 
-    System.out.println("Erste DataRecord " + point.toString());
+    System.out.println("Erste Trash.DataRecord_ " + point.toString());
 
     System.out.println("InfluxDB: " + dbName + " created");
     influxDB.close();*/

@@ -1,4 +1,5 @@
 import Connection.ConnectionPostgreSQL;
+import Trash.DataRecord_;
 import de.akquinet.jbosscc.guttenbase.meta.TableMetaData;
 import de.akquinet.jbosscc.guttenbase.repository.ConnectorRepository;
 import de.akquinet.jbosscc.guttenbase.repository.impl.ConnectorRepositoryImpl;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ReadDataToolMarkus {
 
-  private DataRecord _dataRecord;
+  private DataRecord_ _dataRecord;
   private String measurements;
   private Long time;
   private TimeUnit precision;
@@ -51,7 +52,7 @@ public class ReadDataToolMarkus {
     _readTool.end();
   }
 
-  public DataRecord readLine() throws SQLException {
+  public DataRecord_ readLine() throws SQLException {
     List<Map<String, Object>> tableData;
 
     if ((tableData= _readTool.readTableData(1))!= null){
@@ -67,7 +68,7 @@ public class ReadDataToolMarkus {
         tagsValue = String.valueOf(map.get("id"));
         tagsKey = "identifier";
 
-        return new DataRecord("liftanddrivetime", time.getTime(), precision, fieldKey1, fieldValue1, fieldKey2, fieldValue2, tagsKey, tagsValue);
+        return new DataRecord_("liftanddrivetime", time.getTime(), precision, fieldKey1, fieldValue1, fieldKey2, fieldValue2, tagsKey, tagsValue);
     }
 
     return null;
@@ -77,7 +78,7 @@ public class ReadDataToolMarkus {
     ReadDataToolMarkus readDataToolMarkus = new ReadDataToolMarkus();
     readDataToolMarkus.start();
 
-    DataRecord dataRecord;
+    DataRecord_ dataRecord;
 
     while (((dataRecord=readDataToolMarkus.readLine()) != null)){
       System.out.println(dataRecord.getTagsValue());

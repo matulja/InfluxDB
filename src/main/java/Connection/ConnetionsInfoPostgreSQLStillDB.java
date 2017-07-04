@@ -1,4 +1,4 @@
-package PostgreSQL;
+package Connection;
 
 import de.akquinet.jbosscc.guttenbase.connector.DatabaseType;
 import de.akquinet.jbosscc.guttenbase.connector.impl.URLConnectorInfoImpl;

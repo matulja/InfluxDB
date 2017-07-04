@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static Connection.ConnectionInfoInfluxDB.influxDB;
-import static PostgreSQL.ReadDataFromPostgreSQLResultSet.resultTagsPostgre_;
 
 /**
  * Created by mfehler on 21.06.17.
@@ -163,11 +161,11 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
                     .build();
 
 
-            DataRecord point = null;
+            Trash.DataRecord_ point = null;
 
              while (j < POINT_COUNT) {
 
-              point = DataRecord.measurement(measurements)
+              point = Trash.DataRecord_.measurement(measurements)
                       .time(milies, TimeUnit.MILLISECONDS)
                       .addField(fieldKey, fieldValue)
                       .addField(fieldKey2, fieldValue2)
@@ -176,7 +174,7 @@ public class ReadDataFromPostgresAndWriteToInfluxDBTrash {
 
               batchPoints.point(point);
               influxDB.write(batchPoints);
-              System.out.println("DataRecord " + point.toString());
+              System.out.println("Trash.DataRecord_ " + point.toString());
               j++;
 
             }

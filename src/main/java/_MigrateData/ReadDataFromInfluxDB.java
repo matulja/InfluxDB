@@ -1,3 +1,5 @@
+package _MigrateData;
+
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 
@@ -6,7 +8,7 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
 /**
  * Created by mfehler on 13.06.17.
  */
-public class _ReadDataFromInfluxDB {
+public class ReadDataFromInfluxDB {
 
   static String dbName = "stillDB";
 

@@ -1,4 +1,7 @@
-import PostgreSQL.ConnetionsInfoPostgreSQL;
+package Trash;
+
+import Connection.ConnetionsInfoPostgreSQL;
+import Trash.DataRecord_;
 import de.akquinet.jbosscc.guttenbase.connector.Connector;
 import de.akquinet.jbosscc.guttenbase.repository.ConnectorRepository;
 import de.akquinet.jbosscc.guttenbase.repository.impl.ConnectorRepositoryImpl;
@@ -10,7 +13,7 @@ import java.sql.Statement;
 /**
  * Created by mfehler on 27.06.17.
  */
-public class Main {
+public class Main_ {
 
   public static final String SOURCE = "source";
 
@@ -29,14 +32,14 @@ public class Main {
 
     final ResultSet resultSet = statement.executeQuery(sql);
 
-    final ReadDataTool readDataTool = new ReadDataTool(resultSet);
-    final WriteDataTool writeDataTool= new WriteDataTool();
+    final ReadDataTool_ readDataTool = new ReadDataTool_(resultSet);
+    final WriteDataTool_ writeDataTool= new WriteDataTool_();
 
+    DataRecord_ dataRecord;
+    while((dataRecord=readDataTool.readLine()) != null)  {
+      writeDataTool.writeLine(dataRecord);
+    }
 
-    DataRecord dataRecord;
-      while((dataRecord=readDataTool.readLine()) != null)  {
-        writeDataTool.writeLine(dataRecord);
-      }
 
 
   }
