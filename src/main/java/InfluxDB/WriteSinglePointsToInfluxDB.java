@@ -18,34 +18,12 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
  */
 public class WriteSinglePointsToInfluxDB {
 
-  static String dbName = "still_test";
+  static String dbName = "testDB";
 
   public static void main(final String[] args) throws Exception {
 
-    String measurements = "liftanddrivetime";
-    String fieldName = "liftanddrivetime";
-    Integer fieldKey = 0;
-    String fieldName2 = "readoutduration";
-    Integer fieldKey2 = 25000;
-    String tagName = "identifier";
-    String tagKey = "516210023354";
-
-
-    long milies = 360000;
-    Timestamp timestamp = new Timestamp(milies);
-    System.out.println("timestamp: " + timestamp);
-
-
-  /*  if (influxDB.databaseExists(dbName)) {
-
-          influxDB.deleteDatabase(dbName);
-
-    } else {
-
-    }*/
-
       influxDB.createDatabase(dbName);
-      influxDB.enableBatch(2000, 1000, TimeUnit.MILLISECONDS);
+    influxDB.enableBatch(2000, 1000, TimeUnit.MILLISECONDS);
 
       BatchPoints batchPoints = BatchPoints
               .database(dbName)
@@ -54,17 +32,15 @@ public class WriteSinglePointsToInfluxDB {
               .build();
 
 
-      Point point1 = Point.measurement(measurements)
-              .time(milies, TimeUnit.MILLISECONDS)
-              .addField(fieldName, fieldKey)
-              .addField(fieldName2, fieldKey2)
-              .tag(tagName, tagKey)
+      Point point1 = Point.measurement("liftanddrivetime")
+              .time(360000, TimeUnit.MILLISECONDS)
+              .addField("liftanddrivetime", 0)
+              .addField("readoutduration", 25000)
+              .tag("identifier", "516210023354")
               .build();
 
       batchPoints.point(point1);
       influxDB.write(batchPoints);
-
-      System.out.println("InfluxDB: " + dbName + " created");
       influxDB.close();
 
 

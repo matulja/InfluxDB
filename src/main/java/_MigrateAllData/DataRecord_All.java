@@ -1,4 +1,4 @@
-package _MigrateData;
+package _MigrateAllData;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * Created by mfehler on 27.06.17.
  */
 
-public class DataRecord {
+public class DataRecord_All {
 
   public String measurements;
 
@@ -24,15 +24,15 @@ public class DataRecord {
 
   //private Map<String, String> tags;
 
-  /*public _MigrateData.DataRecord(String measurements, Long time, TimeUnit precision) {
+  /*public MigrateData.DataRecord_All(String measurements, Long time, TimeUnit precision) {
     this.measurements = measurements;
     this.time = time;
     this.precision = precision;
   }*/
 
-  public DataRecord(String measurements, Long time, TimeUnit precision,
-                    Map<String, BigDecimal> fieldData1, Map<String, BigDecimal> fieldData2,
-                    Map<String, String> tagsData) {
+  public DataRecord_All(String measurements, Long time, TimeUnit precision,
+                        Map<String, BigDecimal> fieldData1, Map<String, BigDecimal> fieldData2,
+                        Map<String, String> tagsData) {
 
     this.measurements = measurements;
     this.time = time;
@@ -44,26 +44,26 @@ public class DataRecord {
   }
 
 
-  public DataRecord addFieldValue(String key, BigDecimal value){
+  public DataRecord_All addFieldValue(String key, BigDecimal value){
 
     fieldsData.put(key, value);
     return this;
   }
 
-  public DataRecord addFieldValue2(String key, BigDecimal value){
+  public DataRecord_All addFieldValue2(String key, BigDecimal value){
 
     fieldsData2.put(key, value);
     return this;
   }
 
-  public DataRecord addTagValue(String key, String value){
+  public DataRecord_All addTagValue(String key, String value){
 
     tagsData.put(key, value);
     return this;
   }
 
 
- /* public _MigrateData.DataRecord setTags(final Map<String, String> tags) {
+ /* public MigrateData.DataRecord_All setTags(final Map<String, String> tags) {
     this.tags = tags;
     return this;
   }*/

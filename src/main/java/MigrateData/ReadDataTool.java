@@ -1,9 +1,7 @@
-package _MigrateData;
+package MigrateData;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +23,7 @@ public class ReadDataTool {
 
  public DataRecord readLine() throws Exception {
 
+
      if (_resultSet.next()) {
 
        String measurements = _resultSet.getMetaData().getColumnName(1);
@@ -41,10 +40,7 @@ public class ReadDataTool {
        Map<String, String> tagsData = new TreeMap<>();
        tagsData.put(_resultSet.getMetaData().getColumnName(3), _resultSet.getString("identifier"));
 
-
        _dataRecord = new DataRecord(measurements, time, precision, fieldData1,fieldData2,tagsData);
-       //System.out.println("dataBuilder: " + _dataRecord.getTagsData() +"" + _dataRecord.getFieldsData() + "" +
-        //       "" + _dataRecord.getFieldsData2()+ "Time" + _dataRecord.getTime());
        return _dataRecord;
      }
 

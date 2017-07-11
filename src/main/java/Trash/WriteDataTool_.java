@@ -18,6 +18,9 @@ public class WriteDataTool_ {
 
   public void writeLine(DataRecord_ dataRecord) {
 
+    influxDB.disableBatch();
+    influxDB.enableBatch(2000, 100, TimeUnit.MICROSECONDS);
+
     influxDB.createDatabase(dbName);
     BatchPoints batchPoints = BatchPoints
             .database(dbName)
@@ -33,7 +36,7 @@ public class WriteDataTool_ {
               .build();
     batchPoints.point(point);
     influxDB.write(batchPoints);
-    System.out.println(" " + point.toString());
+  //  System.out.println(" " + point.toString());
 
   }
 

@@ -1,5 +1,6 @@
+package Trash;
+
 import Connection.ConnectionPostgreSQL;
-import Trash.DataRecord_;
 import de.akquinet.jbosscc.guttenbase.meta.TableMetaData;
 import de.akquinet.jbosscc.guttenbase.repository.ConnectorRepository;
 import de.akquinet.jbosscc.guttenbase.repository.impl.ConnectorRepositoryImpl;

@@ -1,4 +1,4 @@
-package _MigrateData;
+package MigrateData;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.BatchPoints;
@@ -16,12 +16,13 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
 public class WriteDataTool {
 
   public static final String dbName = "stillDB";
+  public static final String dbName2 = "tdmka";
 
   public void writeLine(DataRecord dataRecord) {
 
-    influxDB.createDatabase(dbName);
+    influxDB.createDatabase(dbName2);
     BatchPoints batchPoints = BatchPoints
-            .database(dbName)
+            .database(dbName2)
             .retentionPolicy("autogen")
             .consistency(InfluxDB.ConsistencyLevel.ALL)
             .build();
@@ -42,7 +43,7 @@ public class WriteDataTool {
       Point point = (Point) builder.build();
       batchPoints.point(point);
       influxDB.write(batchPoints);
-      System.out.println(" " + point);
+     // System.out.println(" " + point);
 
 
     }

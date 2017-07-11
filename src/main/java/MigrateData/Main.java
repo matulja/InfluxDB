@@ -1,6 +1,6 @@
-package _MigrateData;
+package MigrateData;
 
-import Connection.ConnetionsInfoPostgreSQL;
+import Connection.ConnetionsInfoPostgreSQLStill;
 import de.akquinet.jbosscc.guttenbase.connector.Connector;
 import de.akquinet.jbosscc.guttenbase.repository.ConnectorRepository;
 import de.akquinet.jbosscc.guttenbase.repository.impl.ConnectorRepositoryImpl;
@@ -19,7 +19,7 @@ public class Main {
   public static void main(final String[] args) throws Exception {
 
     final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
-    connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQL());
+    connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQLStill());
     final Connector connector = connectorRepository.createConnector(SOURCE);
 
     Connection connection = connector.openConnection();
@@ -27,10 +27,10 @@ public class Main {
 
     String sql = "SELECT liftanddrivetime, readoutduration, identifier, extract (epoch from readouttime) * 1000 as time" +
             " FROM tdm_liftanddrivetimes ladt, tdm_vehicle v, tdm_vehicledataunit du " +
-            "WHERE ladt.vehicle_id =v.id";
+            "WHERE ladt.vehicle_id =v.id AND v.vehicledataunit_id = du.id AND du.deletedsince = 0 LIMIT 100000000";
+
 
     final ResultSet resultSet = statement.executeQuery(sql);
-
     final ReadDataTool readDataTool = new ReadDataTool(resultSet);
     final WriteDataTool writeDataTool = new WriteDataTool();
 
@@ -39,6 +39,7 @@ public class Main {
     while((dataRecord = readDataTool.readLine()) != null)  {
       writeDataTool.writeLine(dataRecord);
     }
+
 
   }
 

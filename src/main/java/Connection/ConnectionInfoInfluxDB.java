@@ -1,6 +1,7 @@
 package Connection;
 
 
+import com.mysql.cj.core.util.TestUtils;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 
@@ -10,13 +11,9 @@ import org.influxdb.InfluxDBFactory;
  */
 public class ConnectionInfoInfluxDB {
 
-   static String dbName = "still_test";
-   static String dbName2= "NOAA_water_database";
-   static String dbName3= "still";
-
-
-   public static InfluxDB influxDB =
+   public static final InfluxDB influxDB =
            InfluxDBFactory.connect("http://localhost:8086", "mary", "password");
+
 
 
 }
