@@ -1,6 +1,6 @@
-package _MigrateAllData;
+package Trash;
 
-import com.google.common.base.Stopwatch;
+import _MigrateAllData.DataRecord;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
@@ -14,20 +14,23 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
 /**
  * Created by mfehler on 27.06.17.
  */
-public class WriteDataTool_All2 {
+public class WriteDataTool_All {
 
   public static final String dbName = "tdmka";
 
-  public WriteDataTool_All2() {
+  public WriteDataTool_All() {
 
-   // influxDB.enableBatch(500,100,TimeUnit.MILLISECONDS);
-    influxDB.enableBatch(1000,100,TimeUnit.SECONDS);
-
+    influxDB.enableBatch(5000, 1000, TimeUnit.SECONDS);
   }
 
-  public void writeLine(DataRecord_All dataRecordAll) {
+  public void writeLine(DataRecord dataRecordAll) {
 
-    // influxDB.createDatabase(dbName);
+
+    BatchPoints batchPoints = BatchPoints
+            .database(dbName)
+            .retentionPolicy("autogen")
+            .consistency(InfluxDB.ConsistencyLevel.ALL)
+            .build();
 
     Point.Builder builder = Point.measurement(dataRecordAll.getMeasurements())
             .time(dataRecordAll.getTime(), TimeUnit.MILLISECONDS)
@@ -35,21 +38,20 @@ public class WriteDataTool_All2 {
 
     for (Map.Entry<String, BigDecimal> entry1 : dataRecordAll.getFieldsData().entrySet()) {
       builder.addField(entry1.getKey(), entry1.getValue());
-
     }
+
     for (Map.Entry<String, BigDecimal> entry2 : dataRecordAll.getFieldsData2().entrySet()) {
       builder.addField(entry2.getKey(), entry2.getValue());
     }
 
-    Point point = (Point) builder.build();
-    influxDB.write(dbName, "autogen", point);
+     // builder.build();
+      Point point = (Point) builder.build();
+      batchPoints.point(point);
+      influxDB.write(batchPoints);
 
-  //  influxDB.disableBatch();
-    //System.out.println(" " + point);
 
-
+    }
   }
-}
 
 
 

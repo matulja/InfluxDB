@@ -1,12 +1,12 @@
 package _MigrateAllData;
 
 import org.influxdb.dto.Point;
-
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static Connection.ConnectionInfoInfluxDB.influxDB;
+
 
 /**
  * Created by mfehler on 27.06.17.
@@ -17,12 +17,12 @@ public class WriteDataTool {
 
   public WriteDataTool() {
 
-
-    influxDB.enableBatch(500,1000,TimeUnit.MILLISECONDS);
-  //  influxDB.enableBatch(1000, 1000, TimeUnit.MILLISECONDS);
+    influxDB.enableBatch(100, 100, TimeUnit.SECONDS);
   }
 
-  public void writeLine(DataRecord_All dataRecordAll) {
+
+  public void writeLine(DataRecord dataRecordAll) throws Exception {
+
 
     Point.Builder builder = Point.measurement(dataRecordAll.getMeasurements())
             .time(dataRecordAll.getTime(), TimeUnit.MILLISECONDS)
@@ -38,13 +38,13 @@ public class WriteDataTool {
 
     Point point = (Point) builder.build();
     influxDB.write(dbName, "autogen", point);
-    influxDB.close();
-
-    //System.out.println(" " + point);
 
 
   }
+
+
 }
+
 
 
 

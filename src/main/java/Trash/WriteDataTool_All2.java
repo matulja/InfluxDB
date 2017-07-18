@@ -1,7 +1,6 @@
-package _MigrateAllData;
+package Trash;
 
-import org.influxdb.InfluxDB;
-import org.influxdb.dto.BatchPoints;
+import _MigrateAllData.DataRecord;
 import org.influxdb.dto.Point;
 
 import java.math.BigDecimal;
@@ -13,22 +12,20 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
 /**
  * Created by mfehler on 27.06.17.
  */
-public class WriteDataTool_All {
+public class WriteDataTool_All2 {
 
-  public static final String dbName2 = "tdmka";
+  public static final String dbName = "tdmka";
 
-  public void writeLine(DataRecord_All dataRecordAll) {
+  public WriteDataTool_All2() {
 
-    //influxDB.createDatabase(dbName2);
+   // influxDB.enableBatch(500,100,TimeUnit.MILLISECONDS);
+    influxDB.enableBatch(1000,100,TimeUnit.SECONDS);
 
-    influxDB.enableBatch(1000, 100, TimeUnit.MICROSECONDS);
+  }
 
+  public void writeLine(DataRecord dataRecordAll) {
 
-    BatchPoints batchPoints = BatchPoints
-            .database(dbName2)
-            .retentionPolicy("autogen")
-            .consistency(InfluxDB.ConsistencyLevel.ALL)
-            .build();
+    // influxDB.createDatabase(dbName);
 
     Point.Builder builder = Point.measurement(dataRecordAll.getMeasurements())
             .time(dataRecordAll.getTime(), TimeUnit.MILLISECONDS)
@@ -36,22 +33,21 @@ public class WriteDataTool_All {
 
     for (Map.Entry<String, BigDecimal> entry1 : dataRecordAll.getFieldsData().entrySet()) {
       builder.addField(entry1.getKey(), entry1.getValue());
-    }
 
+    }
     for (Map.Entry<String, BigDecimal> entry2 : dataRecordAll.getFieldsData2().entrySet()) {
       builder.addField(entry2.getKey(), entry2.getValue());
     }
 
-      builder.build();
-      Point point = (Point) builder.build();
-      batchPoints.point(point);
-      influxDB.write(batchPoints);
-      influxDB.disableBatch();
-      //System.out.println(" " + point);
+    Point point = (Point) builder.build();
+    influxDB.write(dbName, "autogen", point);
+
+  //  influxDB.disableBatch();
+    //System.out.println(" " + point);
 
 
-    }
   }
+}
 
 
 

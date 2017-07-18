@@ -24,7 +24,7 @@ public class DataRecord {
 
   //private Map<String, String> tags;
 
-  /*public MigrateData.DataRecord_All(String measurements, Long time, TimeUnit precision) {
+  /*public MigrateData.DataRecord(String measurements, Long time, TimeUnit precision) {
     this.measurements = measurements;
     this.time = time;
     this.precision = precision;
@@ -63,7 +63,7 @@ public class DataRecord {
   }
 
 
- /* public MigrateData.DataRecord_All setTags(final Map<String, String> tags) {
+ /* public MigrateData.DataRecord setTags(final Map<String, String> tags) {
     this.tags = tags;
     return this;
   }*/

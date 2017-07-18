@@ -9,13 +9,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static Connection.ConnectionInfoInfluxDB.influxDB;
-
 
 /**
  * Created by mfehler on 27.06.17.
  */
-public class Main_All {
+public class Main {
 
   public static final String SOURCE = "source";
 
@@ -33,19 +31,19 @@ public class Main_All {
     connection.setAutoCommit(false);
 
     Statement statement = connection.createStatement();
-    statement.setFetchSize(1000);
+    statement.setFetchSize(100);
 
     final ResultSet resultSet = statement.executeQuery(selectSQL);
-    final ReadDataTool_All readDataToolAll = new ReadDataTool_All(resultSet);
-    final WriteDataTool_All2 writeDataTool_all2 = new WriteDataTool_All2();
+    final ReadDataTool readDataToolAll = new ReadDataTool(resultSet);
+    final WriteDataTool writeDataTool= new WriteDataTool();
 
    // System.out.println("Rows: " + readDataToolAll.getRowCount(resultSet)); //499990947 - 40 min
 
 
-    DataRecord_All dataRecordAll;
+    DataRecord dataRecordAll;
 
     while((dataRecordAll = readDataToolAll.readLine()) != null)  {
-      writeDataTool_all2.writeLine(dataRecordAll);
+      writeDataTool.writeLine(dataRecordAll);
     }
 
     statement.close();

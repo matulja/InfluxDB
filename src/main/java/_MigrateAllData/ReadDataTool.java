@@ -11,19 +11,19 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by mfehler on 27.06.17.
  */
-public class ReadDataTool_All {
+public class ReadDataTool {
 
   private ResultSet _resultSet;
-  private DataRecord_All _dataRecordAll;
+  private DataRecord _dataRecordAll;
   private int totalRows;
 
-  public ReadDataTool_All(final ResultSet resultSet) {
+  public ReadDataTool(final ResultSet resultSet) {
 
     _resultSet = resultSet;
 
   }
 
-  public DataRecord_All readLine() throws Exception {
+  public DataRecord readLine() throws Exception {
 
 
     if (_resultSet.next()) {
@@ -42,7 +42,7 @@ public class ReadDataTool_All {
       Map<String, String> tagsData = new TreeMap<>();
       tagsData.put(_resultSet.getMetaData().getColumnName(3), _resultSet.getString("identifier"));
 
-      _dataRecordAll = new DataRecord_All(measurements, time, precision, fieldData1, fieldData2, tagsData);
+      _dataRecordAll = new DataRecord(measurements, time, precision, fieldData1, fieldData2, tagsData);
       return _dataRecordAll;
 
     } else {
