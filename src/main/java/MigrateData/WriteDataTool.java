@@ -15,8 +15,9 @@ import static Connection.ConnectionInfoInfluxDB.influxDB;
  */
 public class WriteDataTool {
 
-  public static final String dbName = "stillDB";
-  public static final String dbName2 = "tdmka";
+
+  public static final String dbName2 = "test";
+
 
   public void writeLine(DataRecord dataRecord) {
 
@@ -42,8 +43,11 @@ public class WriteDataTool {
       builder.build();
       Point point = (Point) builder.build();
       batchPoints.point(point);
+
+    System.out.println("Batch Point: " + point);
       influxDB.write(batchPoints);
-     // System.out.println(" " + point);
+ //     influxDB.disableBatch();
+
 
 
     }

@@ -1,6 +1,6 @@
 package MigrateData;
 
-import Connection.ConnetionsInfoPostgreSQLStill;
+import Connection.ConnetionsInfoPostgreSQLtdmka;
 import de.akquinet.jbosscc.guttenbase.connector.Connector;
 import de.akquinet.jbosscc.guttenbase.repository.ConnectorRepository;
 import de.akquinet.jbosscc.guttenbase.repository.impl.ConnectorRepositoryImpl;
@@ -12,14 +12,14 @@ import java.sql.Statement;
 /**
  * Created by mfehler on 27.06.17.
  */
-public class Main {
+public class Main_SinglePoints {
 
   public static final String SOURCE = "source";
 
   public static void main(final String[] args) throws Exception {
 
     final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
-    connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQLStill());
+    connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQLtdmka());
     final Connector connector = connectorRepository.createConnector(SOURCE);
 
     Connection connection = connector.openConnection();
@@ -27,7 +27,7 @@ public class Main {
 
     String sql = "SELECT liftanddrivetime, readoutduration, identifier, extract (epoch from readouttime) * 1000 as time" +
             " FROM tdm_liftanddrivetimes ladt, tdm_vehicle v, tdm_vehicledataunit du " +
-            "WHERE ladt.vehicle_id =v.id AND v.vehicledataunit_id = du.id AND du.deletedsince = 0 LIMIT 100000000";
+            "WHERE ladt.vehicle_id =v.id AND v.vehicledataunit_id = du.id AND du.deletedsince = 0";
 
 
     final ResultSet resultSet = statement.executeQuery(sql);
@@ -39,7 +39,6 @@ public class Main {
     while((dataRecord = readDataTool.readLine()) != null)  {
       writeDataTool.writeLine(dataRecord);
     }
-
 
   }
 

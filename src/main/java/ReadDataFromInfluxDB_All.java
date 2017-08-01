@@ -14,8 +14,14 @@ public class ReadDataFromInfluxDB_All {
 
     String meaurements = "liftanddrivetime";
 
-    final Query query = new Query("SELECT * FROM " + meaurements + " LIMIT 10", dbName);
-    final QueryResult queryResult = influxDB.query(query);
+   // final Query query = new Query("SELECT * FROM " + meaurements + " LIMIT 10", dbName);
+
+    final Query query2 = new Query ("SELECT COUNT(readoutduration) FROM liftanddrivetime", dbName);
+    final QueryResult queryResult2 = influxDB.query(query2);
+
+    System.out.println("Results Count" + queryResult2);
+
+   /* final QueryResult queryResult = influxDB.query(query);
 
       for (QueryResult.Result result : queryResult.getResults()) {
 
@@ -26,7 +32,7 @@ public class ReadDataFromInfluxDB_All {
             System.out.println("series.Tags: " + series.getTags());
 
           }
-    }
+    }*/
 
   }
 
