@@ -7,21 +7,20 @@ import java.util.concurrent.TimeUnit;
 
 import static Connection.ConnectionInfoInfluxDB.influxDB;
 
-
 /**
  * Created by mfehler on 27.06.17.
  */
 public class WriteDataTool {
 
-  public static final String dbName = "tdmka";
+  public static final String dbName = "test3";
 
   public WriteDataTool() {
 
-    influxDB.enableBatch(100, 100, TimeUnit.SECONDS);
+    influxDB.enableBatch(1000, 100, TimeUnit.MILLISECONDS);  //ca. 10-12 min
+
   }
 
-
-  public void writeLine(DataRecord dataRecordAll) throws Exception {
+  public void writeLine(DataRecord dataRecordAll) {
 
 
     Point.Builder builder = Point.measurement(dataRecordAll.getMeasurements())
@@ -39,11 +38,17 @@ public class WriteDataTool {
     Point point = (Point) builder.build();
     influxDB.write(dbName, "autogen", point);
 
+  //  influxDB.close();
+
 
   }
 
 
-}
+
+  }
+
+
+
 
 
 
