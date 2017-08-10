@@ -50,6 +50,7 @@ public class Main {
       writeDataTool.writeLine(dataRecordAll);
     }
 
+    statement.close();
   }
 
 }
