@@ -1,17 +1,21 @@
-package _MigrateAllData;
+package MigrateAllData;
 
-import Connection.ConnetionsInfoPostgreSQLtdmka;
+import Connection.ConnectionsInfoPostgreSQL;
 import de.akquinet.jbosscc.guttenbase.connector.Connector;
 import de.akquinet.jbosscc.guttenbase.repository.ConnectorRepository;
 import de.akquinet.jbosscc.guttenbase.repository.impl.ConnectorRepositoryImpl;
 
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.concurrent.TimeUnit;
+
+import static Connection.ConnectionsInfoInfluxDB.influxDB;
 
 
 /**
- * Created by mfehler on 27.06.17.
+ * Created by mfehler on 04.07.17.
  */
 public class Main {
 
@@ -20,7 +24,7 @@ public class Main {
   public static void main(final String[] args) throws Exception {
 
     final ConnectorRepository connectorRepository = new ConnectorRepositoryImpl();
-    connectorRepository.addConnectionInfo(SOURCE, new ConnetionsInfoPostgreSQLtdmka());
+    connectorRepository.addConnectionInfo(SOURCE, new ConnectionsInfoPostgreSQL());
     final Connector connector = connectorRepository.createConnector(SOURCE);
 
     String selectSQL = "SELECT liftanddrivetime, readoutduration, identifier, extract (epoch from readouttime) * 1000 as time" +
@@ -38,19 +42,16 @@ public class Main {
     final ReadDataTool readDataToolAll = new ReadDataTool(resultSet);
     final WriteDataTool writeDataTool= new WriteDataTool();
 
-   // System.out.println("Rows: " + readDataToolAll.getRowCount(resultSet));
-
-    //Rows mit Bedinung:  17.117.292
-    //All Rows:  22.344.234
-
 
     DataRecord dataRecordAll;
 
     while((dataRecordAll = readDataToolAll.readLine()) != null)  {
       writeDataTool.writeLine(dataRecordAll);
+
     }
 
     statement.close();
+    influxDB.close();
   }
 
 }

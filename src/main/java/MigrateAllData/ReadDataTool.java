@@ -1,4 +1,4 @@
-package _MigrateAllData;
+package MigrateAllData;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Created by mfehler on 27.06.17.
+ * Created by mfehler on 04.07.17.
  */
 public class ReadDataTool {
 

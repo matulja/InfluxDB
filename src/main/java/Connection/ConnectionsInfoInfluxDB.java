@@ -7,9 +7,9 @@ import org.influxdb.InfluxDBFactory;
 
 
 /**
- * Created by mfehler on 06.06.17.
+ * Created by mfehler on 21.06.17.
  */
-public class ConnectionInfoInfluxDB {
+public class ConnectionsInfoInfluxDB {
 
    public static final InfluxDB influxDB =
            InfluxDBFactory.connect("http://localhost:8086", "mary", "password");

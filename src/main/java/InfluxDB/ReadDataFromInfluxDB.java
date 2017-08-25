@@ -3,7 +3,7 @@ package InfluxDB;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 
-import static Connection.ConnectionInfoInfluxDB.influxDB;
+import static Connection.ConnectionsInfoInfluxDB.influxDB;
 
 import static java.util.stream.StreamSupport.stream;
 

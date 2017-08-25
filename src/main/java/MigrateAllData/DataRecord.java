@@ -1,4 +1,4 @@
-package _MigrateAllData;
+package MigrateAllData;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by mfehler on 27.06.17.
+ * Created by mfehler on 04.07.17.
  */
 
 public class DataRecord {
@@ -24,7 +24,7 @@ public class DataRecord {
 
   //private Map<String, String> tags;
 
-  /*public MigrateData.DataRecord(String measurements, Long time, TimeUnit precision) {
+  /*public MigrateData_old.DataRecord(String measurements, Long time, TimeUnit precision) {
     this.measurements = measurements;
     this.time = time;
     this.precision = precision;
@@ -63,7 +63,7 @@ public class DataRecord {
   }
 
 
- /* public MigrateData.DataRecord setTags(final Map<String, String> tags) {
+ /* public MigrateData_old.DataRecord setTags(final Map<String, String> tags) {
     this.tags = tags;
     return this;
   }*/

@@ -8,13 +8,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by mfehler on 21.03.17.
+ * Created by mfehler on 21.06.17.
  */
-public class ConnetionsInfoPostgreSQLStill extends URLConnectorInfoImpl {
+public class ConnectionsInfoPostgreSQLtdmka extends URLConnectorInfoImpl {
 
 private static final long serialVersionUID = 1L;
 
-public ConnetionsInfoPostgreSQLStill() {
+public ConnectionsInfoPostgreSQLtdmka() {
         super("jdbc:postgresql://still-db.spree.de/tdmka", "tdm", "secret",
         "org.postgresql.Driver", "public", DatabaseType.POSTGRESQL);}
 
